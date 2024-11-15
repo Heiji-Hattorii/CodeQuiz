@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeQuiz</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        body{
+            color:#530b0b;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            margin:0;
+            padding:0;
+           
+        }
+        .navbar {
+            width: 100%;
+            background-color: #c58886;
+            color: white;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 0 15px;
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+            border-radius: 5px;
+        }
+        .haut{
+            position:relative;
+            display:flex;
+            background-color:#c58886;
+            width:100%;
+            height:352px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 70px; 
+        }
+        .haut img{
+            position:relative;
+            height:420px;
+        }
+        .haut p{
+            display:flex;
+            width:60%;
+           text-align: center;
+           font-weight: 900;
+           font-size: 20px;
+        }
+        section{
+        width:100%;
+        height:100vh;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content: center;
+        align-items: center;
+        gap:2%;
+    }
+    .quiz{
+        width:240px;
+        height:300px;
+        border-radius: 10px;
+        transition:transform 0.2s ease-in;
+    }
+    .quiz img{
+        width:240px;
+        height:80%;
+        border-radius: 10px 10px 0 0;
+    }
+    .quiz h2{
+        padding-left:20px;
+    }
+    .quiz:hover{
+        transform:scale(1.02);
+    }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="indexfirst.html">Home</a>
+        <a href="add.html">Dashboard</a>
+    </div>
+    <div class="haut"><img src="img/lastlogo.svg" alt="">
+     <div class="haut"><p style="color:black;">Prête à briller ? ✨ <br><br> Fais chauffer tes neurones et découvre quel niveau d'expertise tu as ! 💖</p></div> 
+ </div>
+     <section id="quiz-list">
+         <!-- Les éléments seront ajoutés ici dynamiquement -->
+     </section>
+     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+             // Vérifier si des quizzes sont déjà dans le local storage, sinon ajouter les quiz de base
+             if (!localStorage.getItem('quizzes')) {
+                 alert('Vous devez creer un quiz !!');
+             }
+ 
+             const quizzes = JSON.parse(localStorage.getItem('quizzes'));
+             const quizList = document.getElementById('quiz-list');
+ 
+             quizzes.forEach(quiz => {
+                 const quizCard = document.createElement('div');
+                 quizCard.classList.add('quiz');
+                 quizCard.style.background = quiz.gradient;
+                 quizCard.innerHTML = `
+                     <img src="${quiz.image}" alt="${quiz.title}">
+                     <h2>${quiz.title}</h2>
+                     <p>Niveau : ${quiz.difficulty}</p>
+                     <p>Nombre de questions : ${quiz.questions.length}</p>
+                 `;
+                 quizCard.addEventListener('click', () => {
+                     localStorage.setItem('quizSelectionne', JSON.stringify(quiz));
+                     window.location.href = 'quizfinal.html';
+                 });
+ 
+                 quizList.appendChild(quizCard);
+             });
+         });
+     </script>
+ </body>
+ </html>
